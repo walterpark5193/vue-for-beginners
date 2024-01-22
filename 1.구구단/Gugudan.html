@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      viewport="viewport"
+      content="width=device-width, user-scalable=no,
+    initial-scale=1.0, maximum-scale=1.0, minumum-scale=1.0"
+    />
+    <title>구구단</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div>{{first}} 곱하기 {{second}} 는?</div>
+      <form v-on:submit="onSubmitForm">
+        <input type="number" ref="answer" v-model="value" />
+        <button type="submit">입력</button>
+      </form>
+      <div id="result">{{result}}</div>
+    </div>
+  </body>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      data: {
+        first: Math.ceil(Math.random() * 9),
+        second: Math.ceil(Math.random() * 9),
+        value: "",
+        result: "",
+      },
+      methods: {
+        onSubmitForm(e) {
+          e.preventDefault(); //새로고침 이벤트 중지
+          if (this.first * this.second === parseInt(this.value)) {
+            this.result = "정답";
+            this.first = Math.ceil(Math.random() * 9);
+            this.second = Math.ceil(Math.random() * 9);
+            this.value = "";
+            this.$refs.answer.focus(); //button 클릭하여 submit 시 focus가 없어지므로 button 클릭 후 input 태그에 focus를 줌 (UI/UX 측면)
+          } else {
+            this.result = "땡";
+            this.value = "";
+            this.$refs.answer.focus(); //button 클릭하여 submit 시 focus가 없어지므로 button 클릭 후 input 태그에 focus를 줌 (UI/UX 측면)
+          }
+        },
+      },
+    });
+  </script>
+</html>
