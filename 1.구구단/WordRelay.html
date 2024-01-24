@@ -12,27 +12,21 @@
   </head>
   <body>
     <div id="root">
-      <!-- props를 사용해 component 생성 때 파라미터를 넘겨서 설정이 가능하다 -->
-      <word-relay start-Word="초밥"></word-relay>
-      <word-relay start-Word="순두부찌개"></word-relay>
-      <word-relay start-Word="돈까스"></word-relay>
+      <div>{{word}}</div>
+      <form v-on:submit="onSubmitForm">
+        <input type="text" v-model="value" ref="answer" />
+        <button type="submit">입력!</button>
+      </form>
+      <div>{{result}}</div>
     </div>
   </body>
   <script>
-    Vue.component("word-relay", {
-      template: `
-        <div>
-          <div>{{ word }}</div>
-          <form v-on:submit="onSubmitForm">
-            <input type="text" v-model="value" ref="answer" />
-            <button type="submit">입력!</button>
-          </form>
-          <div>{{ result }}</div>
-        </div>
-      `,
-      props: ["startWord"],
-      data() {
-        return { word: this.startWord, result: "", value: "" };
+    const app = new Vue({
+      el: "#root",
+      data: {
+        word: "초밥",
+        result: "",
+        value: "",
       },
       methods: {
         onSubmitForm(e) {
@@ -49,11 +43,6 @@
           }
         },
       },
-    });
-  </script>
-  <script>
-    const app = new Vue({
-      el: "#root",
     });
   </script>
 </html>
